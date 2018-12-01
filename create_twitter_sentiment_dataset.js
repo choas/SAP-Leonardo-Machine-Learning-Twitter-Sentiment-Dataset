@@ -1,7 +1,7 @@
 "use strict";
 
 const fs = require("fs");
-console.log (process.argv.length) ; //? process.argv[2] : 100;
+const archiver = require("archiver");
 
 const TAKE_EVERY = (process.argv.length > 2) ? process.argv[2] : 100;
 
@@ -31,6 +31,44 @@ var p_tr = P_TR, p_te = P_TE, p_va = P_VA;
 var c_tr = 0, c_te = 0, c_va = 0;
 var total = 0;
 
+var output = fs.createWriteStream(__dirname + "/" + PATH + ".zip");
+var archive = archiver("zip", {
+  store: true
+  // zlib: { level: 1 } // Sets the compression level.
+});
+
+// listen for all archive data to be written
+// "close" event is fired only when a file descriptor is involved
+output.on("close", function() {
+  console.log(archive.pointer() + " total bytes");
+  console.log("archiver has been finalized and the output file descriptor has closed.");
+});
+ 
+// This event is fired when the data source is drained no matter what was the data source.
+// It is not part of this library but rather from the NodeJS Stream API.
+// @see: https://nodejs.org/api/stream.html#stream_event_end
+output.on("end", function() {
+  console.log("Data has been drained");
+});
+ 
+// good practice to catch warnings (ie stat failures and other non-blocking errors)
+archive.on("warning", function(err) {
+  if (err.code === "ENOENT") {
+    // log warning
+  } else {
+    // throw error
+    throw err;
+  }
+});
+ 
+// good practice to catch this error explicitly
+archive.on("error", function(err) {
+  throw err;
+});
+ 
+// pipe archive data to the file
+archive.pipe(output);
+
 fs.readFile("Sentiment Analysis Dataset.csv", (e, data) => {
 
   const lines = data.toString().split("\n");
@@ -52,10 +90,16 @@ fs.readFile("Sentiment Analysis Dataset.csv", (e, data) => {
 
       const filename = path() + labels[col[1]] + "/" + col[0] + ".txt";
 
-      fs.writeFileSync(filename, txt);
+      archive.append(txt, { name: filename });
     }
     linecount += 1;
   });
+
+  console.log("finalize zip file" + TAKE_EVERY <= 10 ? " ... this can take some time" : "");
+  if (TAKE_EVERY < 5) {
+    console.log("every long");
+  }
+  archive.finalize();
 
 });
 
@@ -75,7 +119,7 @@ function path() {
     c_va += 1;
   }
 
-  let dest = PATH + "/" + t + "/";
+  let dest = t + "/";
 
   // adjust balance between trainig, test and validation data set
   total = (c_tr + c_te + c_va);

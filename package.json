@@ -1,0 +1,28 @@
+{
+  "name": "sentiment_analysis_dataset",
+  "version": "1.1.0",
+  "description": "SAP Leonardo Machine Learning Twitter Sentiment Analysis Dataset",
+  "main": "create_twitter_sentiment_dataset.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/choas/SAP-Leonardo-Machine-Learning-Twitter-Sentiment-Dataset.git"
+  },
+  "keywords": [
+    "twitter",
+    "sentiment",
+    "sap",
+    "leonardo"
+  ],
+  "author": "Lars Gregori <lars.gregori@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/choas/SAP-Leonardo-Machine-Learning-Twitter-Sentiment-Dataset/issues"
+  },
+  "homepage": "https://github.com/choas/SAP-Leonardo-Machine-Learning-Twitter-Sentiment-Dataset#readme",
+  "dependencies": {
+    "archiver": "^3.0.0"
+  }
+}

@@ -11,10 +11,10 @@ unzip Sentiment-Analysis-Dataset.zip
 ... and run:
 
 ```sh
-node create_twitter_sentiment_dataset.js
+node create_twitter_sentiment_dataset.js <take_every>
 ```
 
-This creates a sentiment folder with the following structure:
+Take every take_every item (default 100) and create a sentiment zip file with the following structure:
 
 ```text
 sentiment
@@ -27,11 +27,4 @@ sentiment
 └── validation
     ├── negative
     └── positive
-```
-
-Change the folder and zip the files:
-
-```sh
-cd sentiment
-zip -r sentiment.zip test training validation
 ```

@@ -1,4 +1,6 @@
 sentiment*/
+*.zip
 .DS_Store
-
 Sentiment Analysis Dataset.csv
+node_modules
+package-lock.json
