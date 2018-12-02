@@ -54,9 +54,8 @@ output.on("end", function() {
 // good practice to catch warnings (ie stat failures and other non-blocking errors)
 archive.on("warning", function(err) {
   if (err.code === "ENOENT") {
-    // log warning
+    console.log(err);
   } else {
-    // throw error
     throw err;
   }
 });
@@ -95,9 +94,9 @@ fs.readFile("Sentiment Analysis Dataset.csv", (e, data) => {
     linecount += 1;
   });
 
-  console.log("finalize zip file" + TAKE_EVERY <= 10 ? " ... this can take some time" : "");
+  console.log("finalize zip file" + (TAKE_EVERY < 10 ? " ... this can take some time" : ""));
   if (TAKE_EVERY < 5) {
-    console.log("every long");
+    console.log("very long ... go and eat something");
   }
   archive.finalize();
 
