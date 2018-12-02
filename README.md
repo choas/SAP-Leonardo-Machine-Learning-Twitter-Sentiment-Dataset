@@ -11,7 +11,7 @@ unzip Sentiment-Analysis-Dataset.zip
 ... and run:
 
 ```sh
-node create_twitter_sentiment_dataset.js <take_every>
+node create_twitter_sentiment_dataset.js [<take_every>]
 ```
 
 Take every take_every item (default 100) and create a sentiment zip file with the following structure:
